@@ -8,8 +8,6 @@ from google.oauth2.service_account import Credentials
 def authenticate():
     #Load .env
     load_dotenv()
-    #DLAI Custom Key
-    return "DLAI_CREDENTIALS", "DLAI_PROJECT", "gs://gcp-sc2-rlhf"
     
     #Decode key and store in .JSON
     SERVICE_ACCOUNT_KEY_STRING_B64 = os.getenv('SERVICE_ACCOUNT_KEY')
@@ -31,6 +29,18 @@ def authenticate():
     
     #Set project ID according to environment variable    
     PROJECT_ID = os.getenv('PROJECT_ID')
-    STAGING_BUCKET = os.getenv('STAGING_BUCKET')# 'gs://gcp-sc2-rlhf-staging'
-    
-    return credentials, PROJECT_ID, STAGING_BUCKET
+        
+    return credentials, PROJECT_ID
+
+
+def print_d(d, indent=0):
+    for key, val in d.items():
+        indentation = "  " * indent
+        print(f"{indentation}" + "-"*50)
+        print(f"{indentation}key:{key}\n")
+        if isinstance(val, dict):
+            print(f"{indentation}val")
+            print_d(val,indent=indent+1)
+        else:
+            print(f"{indentation}val:{val}")
+        
